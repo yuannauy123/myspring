@@ -8,20 +8,15 @@ import com.yuannauy.myspring.PropertyValues;
 import com.yuannauy.myspring.test.helloworld;
 
 public class AutowireBeanfactory extends AbstractBeanfactory{
-	private Beandefinition beandefinition=new Beandefinition();
 	
-	public  AutowireBeanfactory(String classname){
-		beandefinition.setClassname(classname);
-	}
 	
-	@Override
-	protected Object docreate() throws Exception {
+	protected Object docreate(Beandefinition beandefinition) throws Exception {
 		// TODO Auto-generated method stub
 		Object bean=beandefinition.getBeanclass().newInstance();
-		addPropertyvalue(bean);
+		addPropertyvalue(bean,beandefinition);
 		return bean;
 	}
-    protected void addPropertyvalue(Object bean) throws Exception{
+    protected void addPropertyvalue(Object bean,Beandefinition beandefinition) throws Exception{
     	for(PropertyValue pv:beandefinition.getPropertyValues().getPropertyValues())
     	{
     		Field declaredField = bean.getClass().getDeclaredField(pv.getname());
@@ -32,18 +27,5 @@ public class AutowireBeanfactory extends AbstractBeanfactory{
     }
     
 
-public Object getBean(String property,String value,String name) throws Exception{
-		
-	    
-		PropertyValues pv=new PropertyValues();
-		pv.addPropertyValue(new PropertyValue(property,value));//ÃÌº” Ù–‘
-		beandefinition.setPropertyValues(pv);
-		
-		
-		super.registerBeandefinition(name, beandefinition);//◊¢≤·bean
-		
-		Object bean=(helloworld)super.getBean(name);
-		return bean;
-		
-	} 
+
 }

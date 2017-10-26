@@ -12,10 +12,10 @@ public abstract class AbstractBeanfactory  implements Beanfactory{
 		return map.get(name).getBean();
 	}
 	public void registerBeandefinition(String name,Beandefinition beandefinition)throws Exception{
-		Object bean=docreate();
+		Object bean=docreate(beandefinition);
 		beandefinition.setBean(bean);
 		map.put(name, beandefinition);
 	}
 	
-	abstract Object docreate()throws Exception;
+	abstract Object docreate(Beandefinition beandefinition)throws Exception;
 }

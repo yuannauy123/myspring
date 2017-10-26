@@ -6,6 +6,7 @@ import com.yuannauy.myspring.Beandefinition;
 import com.yuannauy.myspring.PropertyValue;
 import com.yuannauy.myspring.PropertyValues;
 import com.yuannauy.myspring.factory.AutowireBeanfactory;
+import com.yuannauy.myspring.factory.Beanfactory;
 
 public class Beanfactorytest {
 
@@ -16,15 +17,22 @@ public class Beanfactorytest {
 	@Test
 	public void test() throws Exception{
 		
-		AutowireBeanfactory test=new AutowireBeanfactory(classname);
+		Beanfactory beanfactory=new AutowireBeanfactory();
 		
+		Beandefinition beandefinition=new Beandefinition();
 		
-			for(int i=0;i<5;i++)
-			{
-				value="²âÊÔ×Ô¶¯»ú"+i;
-				helloworld hello=(helloworld)test.getBean(property, value, name);
-			    hello.say();
-			}
+		beandefinition.setClassname(classname);
+		
+		PropertyValues pv=new PropertyValues();
+		beandefinition.setPropertyValues(pv);
+		beandefinition.getPropertyValues().addPropertyValue(new PropertyValue(property,value));
+		
+		beanfactory.registerBeandefinition(name, beandefinition);
+		
+		helloworld hello=(helloworld)beanfactory.getBean(name);
+		hello.say();
+		
+			
 			
 		
 	}

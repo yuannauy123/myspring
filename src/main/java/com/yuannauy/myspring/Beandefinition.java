@@ -1,5 +1,7 @@
 package com.yuannauy.myspring;
 
+import com.yuannauy.myspring.PropertyValues;
+
 public class Beandefinition {
 	
 	private Object bean;
@@ -8,7 +10,7 @@ public class Beandefinition {
 	
 	private String ClassName;
 	
-	private PropertyValues propertyvalues;
+	private PropertyValues propertyvalues = new PropertyValues();
 	
 	public Object getBean(){
 		return this.bean;
