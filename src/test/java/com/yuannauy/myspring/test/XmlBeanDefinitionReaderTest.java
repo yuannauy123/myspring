@@ -1,9 +1,7 @@
 package com.yuannauy.myspring.test;
 
-
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.yuannauy.myspring.Beandefinition;
@@ -18,12 +16,18 @@ public class XmlBeanDefinitionReaderTest {
 	public void test() throws Exception{
 		XmlBeandefinitionreader xml=new XmlBeandefinitionreader(new Resourceloader());
 		xml.readerXML("myspring.xml");
-        Map<String, Beandefinition> registry = xml.getRegistry();
+		//Map<String,Beandefinition> registry=xml.getRegistry();
         Beanfactory beanfactory=new AutowireBeanfactory();
-        beanfactory.registerBeandefinition("hello", registry.get("hello"));
-        helloworld hello=(helloworld)beanfactory.getBean("hello");
+        for (Map.Entry<String, Beandefinition> beanDefinitionEntry : xml.getRegistry().entrySet()) 
+        {
+            
+        	beanfactory.registerBeandefinition(beanDefinitionEntry.getKey(), beanDefinitionEntry.getValue());
+        }
+        
+        referenceBean hello=(referenceBean)beanfactory.getBean("referenceBean");
+        
         hello.say();
-		Assert.assertTrue(registry.size() > 0);
+		
 		
 		
 	}

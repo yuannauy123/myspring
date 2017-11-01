@@ -1,11 +1,10 @@
 package com.yuannauy.myspring.factory;
 
 import java.lang.reflect.Field;
-
 import com.yuannauy.myspring.Beandefinition;
+import com.yuannauy.myspring.Beanreference;
 import com.yuannauy.myspring.PropertyValue;
-import com.yuannauy.myspring.PropertyValues;
-import com.yuannauy.myspring.test.helloworld;
+
 
 public class AutowireBeanfactory extends AbstractBeanfactory{
 	
@@ -21,7 +20,13 @@ public class AutowireBeanfactory extends AbstractBeanfactory{
     	{
     		Field declaredField = bean.getClass().getDeclaredField(pv.getname());
 			declaredField.setAccessible(true);
-			declaredField.set(bean, pv.getvalue()); 
+			Object value=pv.getvalue();
+			if(value instanceof Beanreference)
+			{
+				Beanreference beanReference = (Beanreference) value;
+				value = getBean(beanReference.getName());
+			}
+			declaredField.set(bean, value); 
     	}
     	
     }

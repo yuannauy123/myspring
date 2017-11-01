@@ -11,5 +11,8 @@
     <bean name="hello" class="com.yuannauy.myspring.test.helloworld">
         <property name="text" value="Hello World!"></property>
     </bean>
+    <bean name="referenceBean" class="com.yuannauy.myspring.test.referenceBean">
+        <property name="hello" ref="hello"></property>
+    </bean>
 
 </beans>

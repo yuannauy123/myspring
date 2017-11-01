@@ -8,8 +8,18 @@ public abstract class AbstractBeanfactory  implements Beanfactory{
 	
 	HashMap<String, Beandefinition> map=new HashMap<String, Beandefinition>();
 	
-	public Object getBean(String name){
-		return map.get(name).getBean();
+	public Object getBean(String name) throws Exception{
+		Beandefinition beandefinition=map.get(name);
+		if(beandefinition==null)
+		{
+			throw new IllegalArgumentException("No bean named " + name + " is defined");
+		}
+		Object bean=beandefinition.getBean();
+		if(bean==null)
+		{
+			bean=docreate(beandefinition);
+		}
+		return bean;
 	}
 	public void registerBeandefinition(String name,Beandefinition beandefinition)throws Exception{
 		Object bean=docreate(beandefinition);

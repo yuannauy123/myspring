@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.yuannauy.myspring.AbstractBeandefinitionreader;
+import com.yuannauy.myspring.Beanreference;
 import com.yuannauy.myspring.PropertyValue;
 import com.yuannauy.myspring.Beandefinition;
 import com.yuannauy.myspring.io.Resourceloader;
@@ -72,7 +73,16 @@ public class XmlBeandefinitionreader extends AbstractBeandefinitionreader{
 				Element propertyEle = (Element) node;
 				String name = propertyEle.getAttribute("name");
 				String value = propertyEle.getAttribute("value");
+				if(value!=null&&value.length()>0)
 				beandefinition.getPropertyValues().addPropertyValue(new PropertyValue(name, value));
+				else{
+					String ref=propertyEle.getAttribute("ref");
+					if(ref==null||ref.length()==0)
+						throw new IllegalArgumentException("Configuration problem: <property> element for property '"
+								+ name + "' must specify a ref or value"); 
+					Beanreference beanref=new Beanreference(name);
+					beandefinition.getPropertyValues().addPropertyValue(new PropertyValue(name,beanref));
+				}
 			}
 		}
 	}
